@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduPortal Admin Panel</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Box Icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-light: #818cf8;
+            --dark-color: #1f2937;
+            --light-color: #f3f4f6;
+            --gray-color: #9ca3af;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #4f46e5 0%, #0891b2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--dark-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            border-radius: var(--border-radius);
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--primary-color);
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .admin-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .admin-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .admin-body {
+            margin-bottom: 16px;
+        }
+
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px;
+            border: 1px solid var(--gray-color);
+            border-radius: var(--border-radius);
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-secondary {
+            background: var(--light-color);
+            color: var(--dark-color);
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .admin-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .admin-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-color);
+        }
+
+        .admin-item:last-child {
+            border-bottom: none;
+        }
+
+        .admin-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .admin-email {
+            font-weight: 500;
+        }
+
+        .admin-department {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        .activity-log {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .activity-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-color);
+        }
+
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: var(--gray-color);
+        }
+
+        @media (max-width: 768px) {
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .header-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class='bx bxs-graduation'></i>
+                <span>EduPortal Admin</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="window.location.href='index.html'">
+                    <i class='bx bx-home'></i> Portal Home
+                </button>
+                <button class="btn btn-primary" onclick="logout()">
+                    <i class='bx bx-log-out'></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalAdmins">0</div>
+                <div class="stat-label">Department Admins</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalStudents">0</div>
+                <div class="stat-label">Active Students</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalLectures">0</div>
+                <div class="stat-label">Total Lectures</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalDepartments">9</div>
+                <div class="stat-label">Departments</div>
+            </div>
+        </div>
+
+        <div class="admin-grid">
+            <div class="admin-card">
+                <div class="admin-header">
+                    <h2 class="admin-title">Add Department Admin</h2>
+                </div>
+                <div class="admin-body">
+                    <form class="admin-form" id="addAdminForm">
+                        <div class="form-group">
+                            <label for="adminEmail">Admin Email</label>
+                            <input type="email" id="adminEmail" required placeholder="admin@su.edu.krd">
+                        </div>
+                        <div class="form-group">
+                            <label for="adminDepartment">Department</label>
+                            <select id="adminDepartment" required>
+                                <option value="se">Software Engineering</option>
+                                <option value="ce">Civil Engineering</option>
+                                <option value="arch">Architecture</option>
+                                <option value="ee">Electrical Engineering</option>
+                                <option value="me">Mechanical Engineering</option>
+                                <option value="mme">Mechanic and Mechatronics</option>
+                                <option value="ae">Aviation Engineering</option>
+                                <option value="dwre">Dam & Water Resources</option>
+                                <option value="sre">Surveying Engineering</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="adminPassword">Password</label>
+                            <input type="password" id="adminPassword" required placeholder="Strong password required">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class='bx bx-plus'></i> Add Admin
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="admin-header">
+                    <h2 class="admin-title">Department Admins</h2>
+                </div>
+                <div class="admin-body">
+                    <ul class="admin-list" id="adminList">
+                        <!-- Admin list will be rendered here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-log">
+            <div class="admin-header">
+                <h2 class="admin-title">Recent Activity</h2>
+            </div>
+            <ul class="activity-list" id="activityList">
+                <!-- Activity log will be rendered here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is super admin
+        function checkSuperAdmin() {
+            const userRole = localStorage.getItem('userRole');
+            if (userRole !== 'super_admin') {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Initialize admin data in localStorage if not exists
+        function initAdminData() {
+            if (!localStorage.getItem('departmentAdmins')) {
+                localStorage.setItem('departmentAdmins', JSON.stringify([]));
+            }
+            if (!localStorage.getItem('activityLog')) {
+                localStorage.setItem('activityLog', JSON.stringify([]));
+            }
+        }
+
+        // Add new department admin
+        document.getElementById('addAdminForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value;
+            const department = document.getElementById('adminDepartment').value;
+            const password = document.getElementById('adminPassword').value;
+
+            const admins = JSON.parse(localStorage.getItem('departmentAdmins'));
+            const newAdmin = {
+                id: Date.now().toString(),
+                email,
+                department,
+                password: btoa(password), // Basic encryption (not secure for production)
+                createdAt: new Date().toISOString()
+            };
+
+            admins.push(newAdmin);
+            localStorage.setItem('departmentAdmins', JSON.stringify(admins));
+
+            // Log activity
+            logActivity('add_admin', `Added new admin for ${getDepartmentName(department)}`);
+
+            // Reset form and refresh list
+            e.target.reset();
+            renderAdminList();
+            updateStats();
+        });
+
+        // Remove department admin
+        function removeAdmin(adminId) {
+            if (!confirm('Are you sure you want to remove this admin?')) return;
+
+            const admins = JSON.parse(localStorage.getItem('departmentAdmins'));
+            const adminIndex = admins.findIndex(admin => admin.id === adminId);
+            
+            if (adminIndex !== -1) {
+                const removedAdmin = admins[adminIndex];
+                admins.splice(adminIndex, 1);
+                localStorage.setItem('departmentAdmins', JSON.stringify(admins));
+
+                // Log activity
+                logActivity('remove_admin', `Removed admin for ${getDepartmentName(removedAdmin.department)}`);
+
+                renderAdminList();
+                updateStats();
+            }
+        }
+
+        // Reset admin password
+        function resetPassword(adminId) {
+            const newPassword = prompt('Enter new password:');
+            if (!newPassword) return;
+
+            const admins = JSON.parse(localStorage.getItem('departmentAdmins'));
+            const admin = admins.find(a => a.id === adminId);
+            
+            if (admin) {
+                admin.password = btoa(newPassword);
+                localStorage.setItem('departmentAdmins', JSON.stringify(admins));
+
+                // Log activity
+                logActivity('reset_password', `Reset password for ${admin.email}`);
+
+                alert('Password has been reset successfully.');
+            }
+        }
+
+        // Log activity
+        function logActivity(type, description) {
+            const activities = JSON.parse(localStorage.getItem('activityLog'));
+            activities.unshift({
+                id: Date.now().toString(),
+                type,
+                description,
+                timestamp: new Date().toISOString()
+            });
+
+            // Keep only last 50 activities
+            if (activities.length > 50) {
+                activities.pop();
+            }
+
+            localStorage.setItem('activityLog', JSON.stringify(activities));
+            renderActivityLog();
+        }
+
+        // Render admin list
+        function renderAdminList() {
+            const adminList = document.getElementById('adminList');
+            const admins = JSON.parse(localStorage.getItem('departmentAdmins'));
+
+            adminList.innerHTML = admins.map(admin => `
+                <li class="admin-item">
+                    <div class="admin-info">
+                        <div class="admin-email">${admin.email}</div>
+                        <div class="admin-department">${getDepartmentName(admin.department)}</div>
+                    </div>
+                    <div class="admin-actions">
+                        <button class="btn btn-secondary" onclick="resetPassword('${admin.id}')">
+                            <i class='bx bx-key'></i>
+                        </button>
+                        <button class="btn btn-danger" onclick="removeAdmin('${admin.id}')">
+                            <i class='bx bx-trash'></i>
+                        </button>
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        // Render activity log
+        function renderActivityLog() {
+            const activityList = document.getElementById('activityList');
+            const activities = JSON.parse(localStorage.getItem('activityLog'));
+
+            activityList.innerHTML = activities.map(activity => `
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class='bx ${getActivityIcon(activity.type)}'></i>
+                    </div>
+                    <div class="activity-details">
+                        <div>${activity.description}</div>
+                        <div class="activity-time">${formatTime(activity.timestamp)}</div>
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        // Update statistics
+        function updateStats() {
+            const admins = JSON.parse(localStorage.getItem('departmentAdmins'));
+            document.getElementById('totalAdmins').textContent = admins.length;
+
+            // Mock data for demo
+            document.getElementById('totalStudents').textContent = '2,547';
+            document.getElementById('totalLectures').textContent = '342';
+        }
+
+        // Helper functions
+        function getDepartmentName(code) {
+            const departments = {
+                se: 'Software Engineering',
+                ce: 'Civil Engineering',
+                arch: 'Architecture',
+                ee: 'Electrical Engineering',
+                me: 'Mechanical Engineering',
+                mme: 'Mechanic and Mechatronics',
+                ae: 'Aviation Engineering',
+                dwre: 'Dam & Water Resources',
+                sre: 'Surveying Engineering'
+            };
+            return departments[code] || code;
+        }
+
+        function getActivityIcon(type) {
+            const icons = {
+                add_admin: 'bx-user-plus',
+                remove_admin: 'bx-user-minus',
+                reset_password: 'bx-key',
+                upload_pdf: 'bx-upload',
+                delete_pdf: 'bx-trash'
+            };
+            return icons[type] || 'bx-info-circle';
+        }
+
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleString();
+        }
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userRole');
+            window.location.href = 'login.html';
+        }
+
+        // Initialize
+        checkSuperAdmin();
+        initAdminData();
+        renderAdminList();
+        renderActivityLog();
+        updateStats();
+    </script>
+</body>
+</html>
